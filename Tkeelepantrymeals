@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Pantry to Plate</title>
+
+<style>
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f7f5ef;
+    color: #222;
+}
+
+header {
+    background: white;
+    padding: 20px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.logo {
+    font-size: 25px;
+    font-weight: bold;
+}
+
+.logo span {
+    color: #4f9b55;
+}
+
+.hero {
+    text-align: center;
+    padding: 70px 20px 100px;
+}
+
+.hero h1 {
+    font-size: 55px;
+    margin-bottom: 15px;
+}
+
+.hero h1 span {
+    color: #4f9b55;
+}
+
+.hero p {
+    color: #666;
+    font-size: 19px;
+    max-width: 650px;
+    margin: auto;
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 950px;
+    margin: -55px auto 70px;
+    padding: 0 20px;
+}
+
+.card {
+    background: white;
+    padding: 35px;
+    border-radius: 22px;
+    box-shadow: 0 10px 35px rgba(0,0,0,.08);
+    margin-bottom: 25px;
+}
+
+.upload {
+    border: 2px dashed #8db791;
+    padding: 45px 20px;
+    text-align: center;
+    border-radius: 18px;
+    cursor: pointer;
+}
+
+.upload:hover {
+    background: #f2f8f1;
+}
+
+.upload-icon {
+    font-size: 50px;
+}
+
+.upload h2 {
+    margin-bottom: 8px;
+}
+
+.upload p {
+    color: #777;
+}
+
+.upload-button {
+    display: inline-block;
+    background: #4f9b55;
+    color: white;
+    padding: 13px 25px;
+    border-radius: 10px;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.preview {
+    display: none;
+    text-align: center;
+    margin-top: 25px;
+}
+
+.preview img {
+    max-width: 100%;
+    max-height: 350px;
+    border-radius: 15px;
+}
+
+.ingredients {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.ingredient {
+    background: #e8f4e5;
+    color: #356b39;
+    padding: 10px 15px;
+    border-radius: 25px;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.ingredient.selected {
+    background: #4f9b55;
+    color: white;
+}
+
+.button {
+    width: 100%;
+    border: none;
+    padding: 16px;
+    background: #4f9b55;
+    color: white;
+    border-radius: 10px;
+    font-size: 17px;
+    font-weight: bold;
+    margin-top: 25px;
+    cursor: pointer;
+}
+
+.button:hover {
+    background: #3f8045;
+}
+
+.recipes {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 20px;
+}
+
+.recipe {
+    border: 1px solid #ddd;
+    border-radius: 15px;
+    overflow: hidden;
+    background: white;
+}
+
+.recipe-top {
+    height: 130px;
+    background: linear-gradient(135deg,#e6f2df,#f5e4c8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 60px;
+}
+
+.recipe-content {
+    padding: 20px;
+}
+
+.recipe-content h3 {
+    margin-top: 0;
+}
+
+.recipe-content p {
+    color: #666;
+    line-height: 1.5;
+}
+
+.time {
+    color: #4f9b55;
+    font-weight: bold;
+    margin-top: 15px;
+}
+
+.hidden {
+    display: none;
+}
+
+footer {
+    text-align: center;
+    padding: 35px;
+    background: #20251f;
+    color: #aaa;
+}
+
+@media(max-width:600px) {
+
+    .hero h1 {
+        font-size: 40px;
+    }
+
+    .card {
+        padding: 22px;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<header>
+
+    <div class="logo">
+        🍽️ Pantry<span>toPlate</span>
+    </div>
+
+</header>
+
+
+<section class="hero">
+
+    <h1>
+        Turn your pantry<br>
+        <span>into a meal.</span>
+    </h1>
+
+    <p>
+        Upload a picture of your fridge or pantry,
+        choose what ingredients you have,
+        and discover recipes you can make.
+    </p>
+
+</section>
+
+
+<div class="container">
+
+
+    <!-- PHOTO -->
+
+    <div class="card">
+
+        <label class="upload">
+
+            <div class="upload-icon">
+                📸
+            </div>
+
+            <h2>
+                Upload your kitchen
+            </h2>
+
+            <p>
+                Upload a picture of your fridge,
+                pantry, or ingredients.
+            </p>
+
+            <span class="upload-button">
+                Choose Picture
+            </span>
+
+            <input
+                type="file"
+                id="photo"
+                accept="image/*">
+
+        </label>
+
+
+        <div
+            class="preview"
+            id="preview">
+
+            <h3>
+                Your picture
+            </h3>
+
+            <img id="photoPreview">
+
+        </div>
+
+    </div>
+
+
+    <!-- INGREDIENTS -->
+
+    <div
+        class="card hidden"
+        id="ingredientCard">
+
+        <h2>
+            🥕 What ingredients do you have?
+        </h2>
+
+        <p>
+            Select everything you see in your kitchen.
+        </p>
+
+        <div
+            class="ingredients"
+            id="ingredients">
+        </div>
+
+        <button
+            class="button"
+            onclick="findRecipes()">
+
+            🍳 Find My Recipes
+
+        </button>
+
+    </div>
+
+
+    <!-- RECIPES -->
+
+    <div
+        class="card hidden"
+        id="recipeCard">
+
+        <h2>
+            🍽️ Recipes You Can Make
+        </h2>
+
+        <br>
+
+        <div
+            class="recipes"
+            id="recipes">
+        </div>
+
+    </div>
+
+</div>
+
+
+<footer>
+
+    Pantry to Plate
+    <br>
+    <small>
+        Cook with what you already have.
+    </small>
+
+</footer>
+
+
+<script>
+
+
+const ingredientList = [
+
+    "Eggs",
+    "Chicken",
+    "Rice",
+    "Cheese",
+    "Tomatoes",
+    "Milk",
+    "Bread",
+    "Potatoes",
+    "Pasta",
+    "Onion",
+    "Garlic",
+    "Butter"
+
+];
+
+
+const photoInput =
+    document.getElementById("photo");
+
+
+const ingredientContainer =
+    document.getElementById("ingredients");
+
+
+const ingredientCard =
+    document.getElementById("ingredientCard");
+
+
+const recipeCard =
+    document.getElementById("recipeCard");
+
+
+let selectedIngredients = [];
+
+
+/* PHOTO UPLOAD */
+
+photoInput.addEventListener(
+    "change",
+    function() {
+
+        const file = this.files[0];
+
+        if (!file) return;
+
+        const reader = new FileReader();
+
+        reader.onload = function(event) {
+
+            document.getElementById(
+                "photoPreview"
+            ).src = event.target.result;
+
+            document.getElementById(
+                "preview"
+            ).style.display = "block";
+
+            ingredientCard.classList.remove(
+                "hidden"
+            );
+
+            createIngredients();
+
+        };
+
+        reader.readAsDataURL(file);
+
+    }
+);
+
+
+/* INGREDIENT BUTTONS */
+
+function createIngredients() {
+
+    ingredientContainer.innerHTML = "";
+
+    ingredientList.forEach(
+        function(ingredient) {
+
+            const button =
+                document.createElement("div");
+
+            button.className =
+                "ingredient";
+
+            button.textContent =
+                ingredient;
+
+            button.onclick = function() {
+
+                if (
+                    selectedIngredients.includes(
+                        ingredient
+                    )
+                ) {
+
+                    selectedIngredients =
+                        selectedIngredients.filter(
+                            item => item !== ingredient
+                        );
+
+                    button.classList.remove(
+                        "selected"
+                    );
+
+                } else {
+
+                    selectedIngredients.push(
+                        ingredient
+                    );
+
+                    button.classList.add(
+                        "selected"
+                    );
+
+                }
+
+            };
+
+            ingredientContainer.appendChild(
+                button
+            );
+
+        }
+    );
+
+}
+
+
+/* RECIPES */
+
+function findRecipes() {
+
+    const recipes = [];
+
+
+    if (
+        selectedIngredients.includes("Eggs") &&
+        selectedIngredients.includes("Cheese")
+    ) {
+
+        recipes.push({
+
+            icon: "🍳",
+
+            name: "Cheesy Omelet",
+
+            description:
+                "A quick omelet made with eggs and melted cheese.",
+
+            time: "10 minutes"
+
+        });
+
+    }
+
+
+    if (
+        selectedIngredients.includes("Chicken") &&
+        selectedIngredients.includes("Rice")
+    ) {
+
+        recipes.push({
+
+            icon: "🍚",
+
+            name: "Chicken Rice Bowl",
+
+            description:
+                "A simple rice bowl with seasoned chicken and your favorite toppings.",
+
+            time: "25 minutes"
+
+        });
+
+    }
+
+
+    if (
+        selectedIngredients.includes("Pasta") &&
+        selectedIngredients.includes("Tomatoes")
+    ) {
+
+        recipes.push({
+
+            icon: "🍝",
+
+            name: "Tomato Pasta",
+
+            description:
+                "Easy pasta tossed with tomatoes, garlic, and simple seasonings.",
+
+            time: "20 minutes"
+
+        });
+
+    }
+
+
+    if (
+        selectedIngredients.includes("Potatoes") &&
+        selectedIngredients.includes("Cheese")
+    ) {
+
+        recipes.push({
+
+            icon: "🥔",
+
+            name: "Cheesy Potatoes",
+
+            description:
+                "Crispy potatoes topped with melted cheese.",
+
+            time: "30 minutes"
+
+        });
+
+    }
+
+
+    if (
+        selectedIngredients.includes("Bread") &&
+        selectedIngredients.includes("Eggs")
+    ) {
+
+        recipes.push({
+
+            icon: "🍞",
+
+            name: "French Toast",
+
+            description:
+                "Golden French toast made with bread, eggs, milk, and butter.",
+
+            time: "15 minutes"
+
+        });
+
+    }
+
+
+    if (recipes.length === 0) {
+
+        recipes.push({
+
+            icon: "🥗",
+
+            name: "Kitchen Creation",
+
+            description:
+                "You don't have an exact recipe match yet. Try selecting a few more ingredients.",
+
+            time: "Try adding more ingredients"
+
+        });
+
+    }
+
+
+    const recipeContainer =
+        document.getElementById("recipes");
+
+
+    recipeContainer.innerHTML = "";
+
+
+    recipes.forEach(
+        function(recipe) {
+
+            const card =
+                document.createElement("div");
+
+            card.className =
+                "recipe";
+
+            card.innerHTML = `
+
+                <div class="recipe-top">
+                    ${recipe.icon}
+                </div>
+
+                <div class="recipe-content">
+
+                    <h3>
+                        ${recipe.name}
+                    </h3>
+
+                    <p>
+                        ${recipe.description}
+                    </p>
+
+                    <div class="time">
+                        ⏱ ${recipe.time}
+                    </div>
+
+                </div>
+
+            `;
+
+            recipeContainer.appendChild(
+                card
+            );
+
+        }
+    );
+
+
+    recipeCard.classList.remove(
+        "hidden"
+    );
+
+
+    recipeCard.scrollIntoView({
+        behavior: "smooth"
+    });
+
+}
+
+</script>
+
+</body>
+</html>
